@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studi Kasus: Navigation + Sidebar</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="04-studi-kasus-nav-sidebar.css">
+</head>
+<body>
+
+  <!-- ===== NAVBAR (flexbox: row, justify-content: space-between) ===== -->
+  <nav class="navbar">
+    <div class="navbar__brand">
+      <span class="navbar__logo">⬡</span>
+      SMK Arrohmaniyah
+    </div>
+
+    <ul class="navbar__menu">
+      <li><a href="#" class="active">Beranda</a></li>
+      <li><a href="#">Materi</a></li>
+      <li><a href="#">Tugas</a></li>
+      <li><a href="#">Nilai</a></li>
+    </ul>
+
+    <div class="navbar__user">
+      <span class="navbar__bell">🔔</span>
+      <div class="navbar__avatar">RS</div>
+    </div>
+  </nav>
+
+  <!-- ===== BODY LAYOUT (flexbox: row -> sidebar + konten) ===== -->
+  <div class="layout">
+
+    <!-- ===== SIDEBAR (flexbox: column) ===== -->
+    <aside class="sidebar">
+      <p class="sidebar__label">Menu Utama</p>
+      <ul class="sidebar__menu">
+        <li><a href="#" class="active"><span>🏠</span>Dashboard</a></li>
+        <li><a href="#"><span>📘</span>Kelas RPL X</a></li>
+        <li><a href="#"><span>📗</span>Kelas RPL XII</a></li>
+        <li><a href="#"><span>📝</span>Bank Soal</a></li>
+        <li><a href="#"><span>📊</span>Rekap Nilai</a></li>
+      </ul>
+
+      <p class="sidebar__label">Lainnya</p>
+      <ul class="sidebar__menu">
+        <li><a href="#"><span>⚙️</span>Pengaturan</a></li>
+        <li><a href="#"><span>🚪</span>Keluar</a></li>
+      </ul>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="content">
+      <h1>Dashboard Guru</h1>
+      <p class="content__desc">Ringkasan aktivitas kelas Rekayasa Perangkat Lunak minggu ini.</p>
+
+      <!-- kartu statistik: flexbox row + wrap -->
+      <div class="stat-grid">
+        <div class="stat-card">
+          <p class="stat-card__label">Total Siswa</p>
+          <p class="stat-card__value">64</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-card__label">Tugas Masuk</p>
+          <p class="stat-card__value">37</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-card__label">Modul Aktif</p>
+          <p class="stat-card__value">5</p>
+        </div>
+      </div>
+
+      <h2>Modul Terbaru</h2>
+      <div class="module-list">
+        <div class="module-item">
+          <div class="module-item__icon">📄</div>
+          <div class="module-item__info">
+            <p class="module-item__title">Bab 1–2 · Pengenalan Internet &amp; HTML</p>
+            <p class="module-item__meta">Kelas X RPL · diperbarui 2 hari lalu</p>
+          </div>
+          <a href="#" class="module-item__action">Lihat</a>
+        </div>
+        <div class="module-item">
+          <div class="module-item__icon">📄</div>
+          <div class="module-item__info">
+            <p class="module-item__title">Flexbox — Layout CSS Satu Dimensi</p>
+            <p class="module-item__meta">Kelas X RPL · diperbarui hari ini</p>
+          </div>
+          <a href="#" class="module-item__action">Lihat</a>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+</body>
+</html>

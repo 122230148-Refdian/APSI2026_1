@@ -1,0 +1,95 @@
+/* ===== Reset & tema dasar ===== */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #0d1117;
+  color: #e6edf3;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2 { font-family: 'Space Grotesk', sans-serif; margin: 0 0 6px; }
+
+header {
+  padding: 50px 24px 30px;
+  text-align: center;
+  border-bottom: 1px solid #2a3444;
+}
+.eyebrow{
+  font-family:'JetBrains Mono', monospace; font-size:13px; color:#7ee787;
+  text-transform:uppercase; letter-spacing:.15em; margin:0 0 10px;
+}
+.lead{ color:#8b98a9; max-width:520px; margin:8px auto 0; }
+.lead code{ color:#7ee787; font-family:'JetBrains Mono', monospace; }
+
+main{ max-width:800px; margin:0 auto; padding:40px 24px 100px; }
+section{ margin-bottom:48px; }
+section h2{
+  font-family:'JetBrains Mono', monospace; font-size:16px; font-weight:600;
+  color:#58a6ff; margin-bottom:14px;
+}
+
+/* ===================================================== */
+/* INI BAGIAN UTAMA: FLEX CONTAINER (.parent)             */
+/* ===================================================== */
+
+.parent {
+  display: flex;                 /* wajib: mengaktifkan flexbox */
+  background: #12181f;
+  border: 1px dashed #2a3444;
+  border-radius: 10px;
+  padding: 16px;
+  gap: 12px;                     /* jarak antar item */
+}
+
+/* --- flex-direction --- */
+.parent--row {
+  flex-direction: row;           /* item disusun horizontal (default) */
+}
+
+.parent--column {
+  flex-direction: column;        /* item disusun vertikal */
+}
+
+/* --- justify-content: mengatur jarak sepanjang MAIN AXIS --- */
+.parent--justify {
+  justify-content: space-between; /* coba ganti: center / flex-end / space-around */
+}
+
+/* --- align-items: mengatur posisi sepanjang CROSS AXIS --- */
+.parent--align-items {
+  align-items: center;            /* coba ganti: flex-start / flex-end / stretch */
+  min-height: 140px;
+}
+
+/* --- flex-wrap: item pindah baris jika ruang tidak cukup --- */
+.parent--wrap {
+  flex-wrap: wrap;                /* coba ganti: nowrap / wrap-reverse */
+}
+
+/* --- align-content: jarak ANTAR BARIS (butuh flex-wrap + banyak baris) --- */
+.parent--align-content {
+  flex-wrap: wrap;
+  align-content: space-between;   /* coba ganti: center / flex-start / stretch */
+  min-height: 220px;
+}
+
+/* ===== Style item, hanya untuk visual demo ===== */
+.child {
+  background: #58a6ff;
+  color: #03101f;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  width: 70px;
+  height: 60px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.child:nth-child(2) { background: #f0883e; }
+.child:nth-child(3) { background: #7ee787; }
+
+.child--tall { height: 100px; }

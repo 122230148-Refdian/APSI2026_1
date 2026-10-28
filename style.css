@@ -1,0 +1,16 @@
+body {
+  font-family: sans-serif;
+  color: #2c2c2a;
+  background: #ffffff;
+}
+h1 { font-size: 2.5rem; }
+h2 { font-size: 1.8rem; }
+a { text-decoration: none; color: #185FA5; }
+a:hover { text-decoration: underline; }
+
+#navbar { background: #1a1a2e; padding: 1rem 2rem; }
+#navbar a { color: white; margin-right: 1.5rem; }
+.subtitle { color: #888; font-size: 1.2rem; }
+
+section { padding: 60px 40px; }
+footer { background: #f1f0e8; padding: 20px; text-align: center; }

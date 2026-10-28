@@ -1,0 +1,252 @@
+/* ===== Reset & tema dasar ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0d1117;
+  color: #e6edf3;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+}
+
+h1, h2 { font-family: 'Space Grotesk', sans-serif; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ============================================================ */
+/* 1. NAVBAR — flex-direction: row, justify-content: space-between */
+/* ============================================================ */
+
+.navbar {
+  display: flex;
+  align-items: center;              /* semua elemen sejajar tengah secara vertikal */
+  justify-content: space-between;   /* brand di kiri, menu di tengah, user di kanan */
+  gap: 20px;
+  padding: 14px 28px;
+  background: #12181f;
+  border-bottom: 1px solid #2a3444;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+}
+.navbar__logo {
+  color: #58a6ff;
+  font-size: 20px;
+}
+
+.navbar__menu {
+  display: flex;               /* menu disusun horizontal */
+  gap: 28px;
+}
+.navbar__menu a {
+  font-size: 14px;
+  color: #8b98a9;
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+  transition: color .15s;
+}
+.navbar__menu a:hover,
+.navbar__menu a.active {
+  color: #e6edf3;
+  border-bottom-color: #58a6ff;
+}
+
+.navbar__user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.navbar__bell { font-size: 16px; opacity: .8; }
+.navbar__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #f0883e;
+  color: #0d1117;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================ */
+/* 2. LAYOUT — sidebar + konten berdampingan (flex row)          */
+/* ============================================================ */
+
+.layout {
+  display: flex;               /* sidebar & content jadi dua kolom */
+  align-items: flex-start;
+  min-height: calc(100vh - 63px);
+}
+
+/* ============================================================ */
+/* 3. SIDEBAR — flex-direction: column                           */
+/* ============================================================ */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;      /* menu tersusun ke bawah */
+  flex: 0 0 240px;             /* lebar tetap 240px, tidak grow / shrink */
+  gap: 22px;
+  padding: 24px 16px;
+  background: #12181f;
+  border-right: 1px solid #2a3444;
+  min-height: calc(100vh - 63px);
+  position: sticky;
+  top: 63px;
+}
+
+.sidebar__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #8b98a9;
+  padding: 0 12px;
+  margin-bottom: 4px;
+}
+
+.sidebar__menu {
+  display: flex;
+  flex-direction: column;      /* setiap item menu ditumpuk vertikal */
+  gap: 2px;
+}
+.sidebar__menu a {
+  display: flex;               /* icon + label sejajar horizontal */
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #8b98a9;
+  padding: 9px 12px;
+  border-radius: 8px;
+  transition: background .15s, color .15s;
+}
+.sidebar__menu a span { font-size: 15px; }
+.sidebar__menu a:hover { background: #1a2230; color: #e6edf3; }
+.sidebar__menu a.active {
+  background: rgba(88,166,255,.12);
+  color: #58a6ff;
+  font-weight: 600;
+}
+
+/* ============================================================ */
+/* 4. MAIN CONTENT                                                */
+/* ============================================================ */
+
+.content {
+  flex: 1;                     /* mengisi sisa ruang setelah sidebar */
+  padding: 32px 36px;
+  min-width: 0;                /* mencegah overflow saat konten lebar */
+}
+.content h1 { font-size: 24px; margin-bottom: 6px; }
+.content__desc { color: #8b98a9; font-size: 14px; margin-bottom: 28px; }
+.content h2 { font-size: 17px; margin: 30px 0 14px; }
+
+/* --- kartu statistik: flex row + wrap agar rapi di layar kecil --- */
+.stat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.stat-card {
+  flex: 1 1 160px;             /* tumbuh mengisi ruang, minimal lebar 160px */
+  background: #12181f;
+  border: 1px solid #2a3444;
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.stat-card__label {
+  font-size: 12px;
+  color: #8b98a9;
+  margin-bottom: 8px;
+}
+.stat-card__value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #7ee787;
+}
+
+/* --- daftar modul: setiap baris pakai flex row --- */
+.module-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.module-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #12181f;
+  border: 1px solid #2a3444;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.module-item__icon {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a2230;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.module-item__info {
+  flex: 1;                     /* mengisi sisa ruang di tengah */
+  min-width: 0;
+}
+.module-item__title {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.module-item__meta {
+  font-size: 12px;
+  color: #8b98a9;
+  margin-top: 2px;
+}
+.module-item__action {
+  flex: 0 0 auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: #58a6ff;
+  border: 1px solid #2a3444;
+  padding: 7px 14px;
+  border-radius: 7px;
+}
+.module-item__action:hover { border-color: #58a6ff; }
+
+/* ============================================================ */
+/* 5. RESPONSIVE — di layar kecil, sidebar & navbar menyesuaikan */
+/* ============================================================ */
+
+@media (max-width: 720px) {
+  .navbar__menu { display: none; }   /* disederhanakan; bisa diganti hamburger menu */
+
+  .layout { flex-direction: column; }
+  .sidebar {
+    flex: none;
+    width: 100%;
+    flex-direction: row;             /* menu sidebar jadi horizontal di mobile */
+    overflow-x: auto;
+    position: static;
+    gap: 8px;
+  }
+  .sidebar__label { display: none; }
+  .sidebar__menu { flex-direction: row; }
+}

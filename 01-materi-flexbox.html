@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Materi Flexbox — RPL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d1117;
+    --panel:#12181f;
+    --panel-2:#1a2230;
+    --border:#2a3444;
+    --text:#e6edf3;
+    --muted:#8b98a9;
+    --main-axis:#58a6ff;
+    --cross-axis:#f0883e;
+    --accent:#7ee787;
+    --code:'JetBrains Mono', monospace;
+    --display:'Space Grotesk', sans-serif;
+    --body:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;}
+  h1,h2,h3{font-family:var(--display);font-weight:700;margin:0 0 .4em;}
+  code, .mono{font-family:var(--code);}
+  a{color:var(--main-axis);}
+
+  .hero{
+    padding:70px 24px 40px;
+    background:
+      radial-gradient(600px 260px at 15% 0%, rgba(88,166,255,.15), transparent 60%),
+      radial-gradient(600px 260px at 85% 10%, rgba(240,136,62,.12), transparent 60%),
+      var(--bg);
+    border-bottom:1px solid var(--border);
+    text-align:center;
+  }
+  .eyebrow{font-family:var(--code);font-size:13px;letter-spacing:.15em;color:var(--accent);text-transform:uppercase;margin-bottom:14px;}
+  .hero h1{font-size:56px;letter-spacing:-.02em;}
+  .hero p{color:var(--muted);max-width:560px;margin:10px auto 0;font-size:16px;}
+
+  .toc{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:30px;}
+  .toc a{
+    font-family:var(--code);font-size:13px;color:var(--text);text-decoration:none;
+    border:1px solid var(--border);padding:8px 14px;border-radius:999px;background:var(--panel);
+  }
+  .toc a span{color:var(--accent);margin-right:6px;}
+  .toc a:hover{border-color:var(--main-axis);}
+
+  main{max-width:960px;margin:0 auto;padding:10px 24px 100px;}
+  section{padding-top:70px;border-top:1px solid var(--border);margin-top:50px;}
+  section:first-child{border-top:none;margin-top:0;}
+
+  .section-num{font-family:var(--code);color:var(--main-axis);font-size:14px;letter-spacing:.1em;}
+  section h2{font-size:32px;margin-top:6px;}
+  section > p.lead{color:var(--muted);font-size:16px;max-width:680px;}
+
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:24px;margin:20px 0;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:720px){.grid2{grid-template-columns:1fr;}}
+
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0;}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);}
+  th{color:var(--muted);font-weight:600;font-family:var(--code);font-size:12px;text-transform:uppercase;letter-spacing:.05em;}
+  td code{background:var(--panel-2);padding:2px 6px;border-radius:5px;color:var(--accent);}
+
+  .prop-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin:24px 0;}
+  .prop-card h3{font-family:var(--code);font-size:19px;color:var(--main-axis);}
+  .prop-card .default{font-family:var(--code);font-size:12px;color:var(--muted);margin-bottom:10px;}
+  .prop-card .default b{color:var(--accent);}
+
+  .demo{margin-top:16px;background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:16px;}
+  .demo-controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .demo-controls button{
+    font-family:var(--code);font-size:12px;background:var(--panel);color:var(--text);
+    border:1px solid var(--border);padding:6px 12px;border-radius:7px;cursor:pointer;
+  }
+  .demo-controls button.active{background:var(--main-axis);color:#03101f;border-color:var(--main-axis);font-weight:600;}
+  .demo-controls button:hover{border-color:var(--main-axis);}
+
+  .preview{
+    display:flex;background:var(--bg);border:1px dashed var(--border);border-radius:8px;
+    min-height:120px;padding:10px;gap:10px;
+  }
+  .box{
+    background:var(--main-axis);color:#03101f;font-family:var(--code);font-weight:700;
+    display:flex;align-items:center;justify-content:center;border-radius:6px;
+    min-width:52px;min-height:52px;flex-shrink:0;
+  }
+  .box.b2{background:var(--cross-axis);}
+  .box.b3{background:var(--accent);}
+  .preview.wrap-preview .box{width:90px;}
+  .preview.tall .box{min-height:80px;}
+
+  .axis-tabs{display:flex;gap:8px;margin-bottom:16px;}
+  .axis-tabs button{
+    font-family:var(--code);font-size:13px;background:var(--panel-2);color:var(--text);
+    border:1px solid var(--border);padding:8px 16px;border-radius:8px;cursor:pointer;
+  }
+  .axis-tabs button.active{background:var(--main-axis);color:#03101f;border-color:var(--main-axis);font-weight:600;}
+  .axis-diagram{display:none;}
+  .axis-diagram.active{display:block;}
+  svg text{font-family:var(--code);}
+
+  .note{background:rgba(240,136,62,.08);border:1px solid rgba(240,136,62,.35);border-radius:10px;padding:14px 16px;font-size:14px;color:#f0c294;margin-top:16px;}
+  .note b{color:var(--cross-axis);}
+
+  .pc-box{background:var(--panel);border:2px solid var(--main-axis);border-radius:10px;padding:18px;position:relative;}
+  .pc-box::before{content:"parent (flex container)";position:absolute;top:-11px;left:14px;background:var(--bg);padding:0 8px;font-family:var(--code);font-size:11px;color:var(--main-axis);}
+  .cc-box{background:var(--panel-2);border:2px solid var(--cross-axis);border-radius:8px;padding:12px;text-align:center;font-family:var(--code);font-size:13px;position:relative;flex:1;}
+  .cc-box::before{content:"child (flex item)";position:absolute;top:-9px;left:8px;background:var(--panel);padding:0 6px;font-size:9px;color:var(--cross-axis);}
+  .pc-row{display:flex;gap:14px;margin-top:26px;}
+
+  footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eyebrow">Materi Pembelajaran · RPL Kelas 10</div>
+  <h1>Flexbox</h1>
+  <p>Cara mengatur layout satu dimensi di CSS — bagaimana elemen disusun, diberi jarak, dan diselaraskan di dalam sebuah container.</p>
+  <div class="toc">
+    <a href="#s1"><span>01</span>Apa itu Flexbox</a>
+    <a href="#s2"><span>02</span>Parent &amp; Child</a>
+    <a href="#s3"><span>03</span>Axis &amp; Size</a>
+    <a href="#s4"><span>04</span>Flex Container</a>
+    <a href="#s5"><span>05</span>Flex Item</a>
+  </div>
+</div>
+
+<main>
+
+<!-- ================= SECTION 1 ================= -->
+<section id="s1">
+  <div class="section-num">01 / Konsep Dasar</div>
+  <h2>Apa itu Flexbox?</h2>
+  <p class="lead"><b>Flexbox</b> (Flexible Box Layout) adalah model layout CSS yang dirancang untuk menyusun elemen dalam <b>satu arah</b> — baris (horizontal) atau kolom (vertikal) — beserta pengaturan jarak, urutan, dan ukurannya secara otomatis.</p>
+
+  <div class="card">
+    <p style="margin-top:0">Sebelum flexbox, developer biasa mengatur layout memakai <code>float</code> atau <code>display: inline-block</code>, yang sering merepotkan untuk hal-hal sederhana seperti:</p>
+    <ul>
+      <li>Membuat 3 kotak sejajar dengan jarak yang rata otomatis</li>
+      <li>Membuat elemen berada tepat di tengah (vertikal <i>dan</i> horizontal)</li>
+      <li>Membuat elemen menyesuaikan ukuran mengisi ruang kosong yang tersisa</li>
+      <li>Mengubah urutan tampilan elemen tanpa mengubah urutan di HTML</li>
+    </ul>
+    <p style="margin-bottom:0">Flexbox menyelesaikan semua itu hanya dengan beberapa baris CSS. Cukup tambahkan <code>display: flex</code> pada elemen pembungkus (parent), maka elemen-elemen di dalamnya otomatis menjadi "flex item" yang bisa diatur.</p>
+  </div>
+
+  <div class="note"><b>Ingat:</b> Flexbox itu <b>satu dimensi</b> — fokus mengatur baris ATAU kolom. Untuk layout dua dimensi (baris DAN kolom sekaligus, seperti tabel), CSS punya <code>display: grid</code>, yang akan dibahas terpisah.</div>
+</section>
+
+<!-- ================= SECTION 2 ================= -->
+<section id="s2">
+  <div class="section-num">02 / Konsep Dasar</div>
+  <h2>Parent dan Child</h2>
+  <p class="lead">Flexbox selalu bekerja dengan dua peran: elemen pembungkus dan elemen yang dibungkus.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="color:var(--main-axis);font-size:18px;">Flex Container (Parent)</h3>
+      <p>Elemen yang diberi <code>display: flex</code>. Dialah yang "memegang kendali" — mengatur arah, jarak, dan penyelarasan semua anaknya.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--cross-axis);font-size:18px;">Flex Item (Child)</h3>
+      <p>Elemen anak <i>langsung</i> di dalam flex container. Setiap flex item bisa diatur ukuran, urutan, dan posisinya masing-masing.</p>
+    </div>
+  </div>
+
+  <div class="pc-box">
+    <div class="pc-row">
+      <div class="cc-box">Item 1</div>
+      <div class="cc-box">Item 2</div>
+      <div class="cc-box">Item 3</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <p style="margin:0 0 8px;color:var(--muted);font-size:13px;font-family:var(--code);">HTML</p>
+    <pre style="margin:0 0 14px;background:var(--panel-2);padding:14px;border-radius:8px;overflow:auto;"><code>&lt;div class="parent"&gt;
+  &lt;div class="child"&gt;Item 1&lt;/div&gt;
+  &lt;div class="child"&gt;Item 2&lt;/div&gt;
+  &lt;div class="child"&gt;Item 3&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    <p style="margin:0 0 8px;color:var(--muted);font-size:13px;font-family:var(--code);">CSS</p>
+    <pre style="margin:0;background:var(--panel-2);padding:14px;border-radius:8px;overflow:auto;"><code>.parent {
+  display: flex;   /* ini membuatnya jadi flex container */
+}</code></pre>
+  </div>
+
+  <div class="note"><b>Penting:</b> <code>display: flex</code> hanya memengaruhi anak <i>langsung</i>. Cucu (anak dari anak) tidak otomatis ikut aturan flexbox, kecuali parent-nya juga diberi <code>display: flex</code>.</div>
+</section>
+
+<!-- ================= SECTION 3 ================= -->
+<section id="s3">
+  <div class="section-num">03 / Konsep Dasar</div>
+  <h2>Axis &amp; Size</h2>
+  <p class="lead">Ini konsep paling penting di flexbox. Semua property container dan item pada dasarnya mengacu pada dua sumbu ini.</p>
+
+  <table>
+    <tr><th>Istilah</th><th>Penjelasan</th></tr>
+    <tr><td><code>main axis</code></td><td>Sumbu utama — arah mengalirnya flex item. Ditentukan oleh <code>flex-direction</code>.</td></tr>
+    <tr><td><code>cross axis</code></td><td>Sumbu tegak lurus terhadap main axis.</td></tr>
+    <tr><td><code>main start / main end</code></td><td>Titik awal dan akhir di sepanjang main axis.</td></tr>
+    <tr><td><code>cross start / cross end</code></td><td>Titik awal dan akhir di sepanjang cross axis.</td></tr>
+    <tr><td><code>main size</code></td><td>Ukuran item/container diukur sepanjang main axis (lebar, jika arahnya baris).</td></tr>
+    <tr><td><code>cross size</code></td><td>Ukuran item/container diukur sepanjang cross axis (tinggi, jika arahnya baris).</td></tr>
+  </table>
+
+  <div class="axis-tabs">
+    <button class="active" data-axis="row">flex-direction: row</button>
+    <button data-axis="column">flex-direction: column</button>
+  </div>
+
+  <div class="axis-diagram active" id="axis-row">
+    <svg viewBox="0 0 640 260" width="100%">
+      <rect x="30" y="40" width="580" height="180" rx="10" fill="none" stroke="#2a3444" stroke-dasharray="6 5"/>
+      <line x1="30" y1="130" x2="610" y2="130" stroke="#58a6ff" stroke-width="2" marker-end="url(#arrowB)"/>
+      <text x="280" y="118" fill="#58a6ff" font-size="14" font-weight="600">main axis</text>
+      <text x="34" y="34" fill="#58a6ff" font-size="12">main start</text>
+      <text x="530" y="34" fill="#58a6ff" font-size="12">main end</text>
+      <line x1="320" y1="40" x2="320" y2="220" stroke="#f0883e" stroke-width="2" marker-end="url(#arrowO)"/>
+      <text x="330" y="235" fill="#f0883e" font-size="14" font-weight="600">cross axis</text>
+      <text x="330" y="55" fill="#f0883e" font-size="12">cross start</text>
+      <text x="330" y="215" fill="#f0883e" font-size="12">cross end</text>
+      <rect x="90" y="90" width="110" height="80" rx="8" fill="#e6edf3" opacity="0.9"/>
+      <text x="145" y="135" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="700">item</text>
+      <text x="145" y="90" fill="#8b98a9" font-size="11" text-anchor="middle">↔ main size</text>
+      <text x="215" y="130" fill="#8b98a9" font-size="11">↕ cross size</text>
+      <defs>
+        <marker id="arrowB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#58a6ff"/></marker>
+        <marker id="arrowO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#f0883e"/></marker>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="axis-diagram" id="axis-column">
+    <svg viewBox="0 0 640 260" width="100%">
+      <rect x="30" y="30" width="580" height="200" rx="10" fill="none" stroke="#2a3444" stroke-dasharray="6 5"/>
+      <line x1="320" y1="30" x2="320" y2="220" stroke="#58a6ff" stroke-width="2" marker-end="url(#arrowB2)"/>
+      <text x="330" y="130" fill="#58a6ff" font-size="14" font-weight="600">main axis</text>
+      <text x="330" y="45" fill="#58a6ff" font-size="12">main start</text>
+      <text x="330" y="212" fill="#58a6ff" font-size="12">main end</text>
+      <line x1="30" y1="90" x2="610" y2="90" stroke="#f0883e" stroke-width="2" marker-end="url(#arrowO2)"/>
+      <text x="440" y="80" fill="#f0883e" font-size="14" font-weight="600">cross axis</text>
+      <text x="40" y="80" fill="#f0883e" font-size="12">cross start</text>
+      <text x="550" y="80" fill="#f0883e" font-size="12">cross end</text>
+      <rect x="265" y="110" width="110" height="70" rx="8" fill="#e6edf3" opacity="0.9"/>
+      <text x="320" y="150" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="700">item</text>
+      <text x="320" y="105" fill="#8b98a9" font-size="11" text-anchor="middle">↕ main size</text>
+      <text x="385" y="150" fill="#8b98a9" font-size="11">↔ cross size</text>
+      <defs>
+        <marker id="arrowB2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#58a6ff"/></marker>
+        <marker id="arrowO2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#f0883e"/></marker>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="note"><b>Kunci:</b> Saat <code>flex-direction: row</code> → main axis = horizontal, cross axis = vertikal. Saat <code>flex-direction: column</code> → main axis dan cross axis <i>bertukar tempat</i>. Ini yang bikin banyak pemula bingung soal <code>justify-content</code> vs <code>align-items</code>.</div>
+</section>
+
+<!-- ================= SECTION 4 ================= -->
+<section id="s4">
+  <div class="section-num">04 / Property</div>
+  <h2>Property Flex Container</h2>
+  <p class="lead">Property ini ditulis pada elemen <b>parent</b> (yang punya <code>display: flex</code>). Klik tombol pada tiap demo untuk lihat efeknya langsung.</p>
+
+  <div class="prop-card">
+    <h3>display</h3>
+    <div class="default">Default: <b>block</b></div>
+    <p>Mengubah elemen menjadi flex container.</p>
+    <table>
+      <tr><th>Value</th><th>Keterangan</th></tr>
+      <tr><td><code>flex</code></td><td>Container tampil sebagai block, item di dalamnya tersusun flex.</td></tr>
+      <tr><td><code>inline-flex</code></td><td>Container tampil sejajar seperti elemen inline, item di dalamnya tetap flex.</td></tr>
+    </table>
+    <div class="demo" data-css="display">
+      <div class="demo-controls">
+        <button class="active" data-value="flex">flex</button>
+        <button data-value="inline-flex">inline-flex</button>
+        <button data-value="block">block</button>
+      </div>
+      <div class="preview">
+        <div class="box">1</div><div class="box b2">2</div><div class="box b3">3</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-card">
+    <h3>flex-direction</h3>
+    <div class="default">Default: <b>row</b></div>
+    <p>Menentukan arah main axis — arah mengalirnya flex item.</p>
+    <table>
+      <tr><th>Value</th><th>Keterangan</th></tr>
+      <tr><td><code>row</code></td><td>Kiri ke kanan (default).</td></tr>
+      <tr><td><code>row-reverse</code></td><td>Kanan ke kiri.</td></tr>
+      <tr><td><code>column</code></td><td>Atas ke bawah.</td></tr>
+      <tr><td><code>column-reverse</code></td><td>Bawah ke atas.</td></tr>
+    </table>
+    <div class="demo" data-css="flex-direction">
+      <div class="demo-controls">
+        <button class="active" data-value="row">row</button>
+        <button data-value="row-reverse">row-reverse</button>
+        <button data-value="column">column</button>
+        <button data-value="column-reverse">column-reverse</button>
+      </div>
+      <div class="preview">
+        <div class="box">1</div><div class="box b2">2</div><div class="box b3">3</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-card">
+    <h3>flex-wrap</h3>
+    <div class="default">Default: <b>nowrap</b></div>
+    <p>Menentukan apakah flex item boleh pindah ke baris/kolom baru saat ruang tidak cukup.</p>
+    <table>
+      <tr><th>Value</th><th>Keterangan</th></tr>
+      <tr><td><code>nowrap</code></td><td>Semua item dipaksa satu baris, ukurannya mengecil jika perlu (default).</td></tr>
+      <tr><td><code>wrap</code></td><td>Item pindah ke baris baru jika ruang tidak cukup.</td></tr>
+      <tr><td><code>wrap-reverse</code></td><td>Sama seperti wrap, tapi baris baru disusun terbalik.</td></tr>
+    </table>
+    <div class="demo" data-css="flex-wrap">
+      <div class="demo-controls">
+        <button class="active" data-value="nowrap">nowrap</button>
+        <button data-value="wrap">wrap</button>
+        <button data-value="wrap-reverse">wrap-reverse</button>
+      </div>
+      <div class="preview wrap-preview">
+        <div class="box">1</div><div class="box b2">2</div><div class="box b3">3</div>
+        <div class="box">4</div><div class="box b2">5</div><div class="box b3">6</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-card">
+    <h3>flex-flow</h3>
+    <div class="default">Default: <b>row nowrap</b></div>
+    <p>Shorthand (gabungan) dari <code>flex-direction</code> + <code>flex-wrap</code> dalam satu baris.</p>
+    <table>
+      <tr><th>Contoh</th><th>Sama dengan</th></tr>
+      <tr><td><code>flex-flow: row wrap;</code></td><td><code>flex-direction: row; flex-wrap: wrap;</code></td></tr>
+      <tr><td><code>flex-flow: column nowrap;</code></td><td><code>flex-direction: column; flex-wrap: nowrap;</code></td></tr>
+    </table>
+    <div class="demo" data-css="flex-flow">
+      <div class="demo-controls">
+        <button class="active" data-value="row nowrap">row nowrap</button>
+        <button data-value="row wrap">row wrap</button>
+        <button data-value="column wrap">column wrap</button>
+      </div>
+      <div class="preview wrap-preview">
+        <div class="box">1</div><div class="box b2">2</div><div class="box b3">3</div>
+        <div class="box">4</div><div class="box b2">5</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-card">
+    <h3>justify-content</h3>
+    <div class="default">Default: <b>flex-start</b></div>
+    <p>Mengatur penyelarasan item di sepanjang <b>main axis</b> (jarak horizontal jika row).</p>
+    <table>
+      <tr><th>Value</th><th>Keterangan</th></tr>
+      <tr><td><code>flex-start</code></td><td>Item menumpuk di main start.</td></tr>
+      <tr><td><code>flex-end</code></td><td>Item menumpuk di main end.</td></tr>
+      <tr><td><code>center</code></td><td>Item di tengah main axis.</td></tr>
+      <tr><td><code>space-between</code></td><td>Jarak sama rata antar item, item pertama &amp; terakhir menempel tepi.</td></tr>
+      <tr><td><code>space-around</code></td><td>Setiap item punya jarak sama di kiri-kanannya.</td></tr>
+      <tr><td><code>space-evenly</code></td><td>Jarak antar semua item (termasuk ke tepi) benar-benar sama.</td></tr>
+    </table>
+    <div class="demo" data-css="justify-content">
+      <div class="demo-controls">
+        <button class="active" data-value="flex-start">flex-start</button>
+        <button data-value="flex-end">flex-end</button>
+        <button data-value="center">center</button>
+        <button data-value="space-between">space-between</button>
+        <button data-value="space-around">space-around</button>
+        <button data-value="space-evenly">space-evenly</button>
+      </div>
+      <div class="preview">
+        <div class="box">1</div><div class="box b2">2</div><div class="box b3">3</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-card">
+    <h3>align-items</h3>
+    <div class="default">Default: <b>stretch</b></div>
+    <p>Mengatur penyelarasan item di sepanjang <b>cross axis</b> (jarak vertikal jika row) — untuk satu baris.</p>
+    <table>
+      <tr><th>Value</th><th>Keterangan</th></tr>
+      <tr><td><code>stretch</code></td><td>Item meregang mengisi penuh cross size (default).</td></tr>
+      <tr><td><code>flex-start</code></td><td>Item rata ke cross start (atas, jika row).</td></tr>
+      <tr><td><code>flex-end</code></td><td>Item rata ke cross end (bawah, jika row).</td></tr>
+      <tr><td><code>center</code></td><td>Item di tengah cross axis.</td></tr>
+      <tr><td><code>baseline</code></td><td>Item sejajar berdasarkan garis dasar teksnya.</td></tr>
+    </table>
+    <div class="demo" data-css="align-items">
+      <div class="demo-controls">
+        <button data-value="stretch" class="active">stretch</button>
+        <button data-value="flex-start">flex-start</button>
+        <button data-value="flex-end">flex-end</button>
+        <button data-value="center">center</button>
+        <button data-value="baseline">baseline</button>
+      </div>
+      <div class="preview tall">
+        <div class="box">1</div><div class="box b2">2</div><div class="box b3">3</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-card">
+    <h3>align-content</h3>
+    <div class="default">Default: <b>stretch</b></div>
+    <p>Mengatur jarak antar-<b>baris</b> pada cross axis. Hanya terlihat efeknya jika <code>flex-wrap: wrap</code> dan ada lebih dari satu baris item.</p>
+    <table>
+      <tr><th>Value</th><th>Keterangan</th></tr>
+      <tr><td><code>stretch</code></td><td>Baris meregang mengisi container (default).</td></tr>
+      <tr><td><code>flex-start</code></td><td>Baris-baris menumpuk di cross start.</td></tr>
+      <tr><td><code>flex-end</code></td><td>Baris-baris menumpuk di cross end.</td></tr>
+      <tr><td><code>center</code></td><td>Baris-baris di tengah.</td></tr>
+      <tr><td><code>space-between</code></td><td>Jarak sama rata antar baris.</td></tr>
+      <tr><td><code>space-around</code></td><td>Setiap baris punya jarak sama di atas-bawahnya.</td></tr>
+    </table>
+    <div class="demo" data-css="align-content">
+      <div class="demo-controls">
+        <button data-value="stretch" class="active">stretch</button>
+        <button data-value="flex-start">flex-start</button>
+        <button data-value="flex-end">flex-end</button>
+        <button data-value="center">center</button>
+        <button data-value="space-between">space-between</button>
+      </div>
+      <div class="preview wrap-preview" style="min-height:220px;flex-wrap:wrap;">
+        <div class="box">1</div><div class="box b2">2</div><div class="box b3">3</div>
+        <div class="box">4</div><div class="box b2">5</div><div class="box b3">6</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECTION 5 ================= -->
+<section id="s5">
+  <div class="section-num">05 / Property</div>
+  <h2>Property Flex Item</h2>
+  <p class="lead">Property ini ditulis pada elemen <b>child</b> (item di dalam flex container), untuk mengatur item itu sendiri.</p>
+
+  <div class="prop-card">
+    <h3>order</h3>
+    <div class="default">Default: <b>0</b></div>
+    <p>Mengubah urutan tampil item tanpa mengubah urutan aslinya di HTML. Item dengan nilai lebih kecil tampil lebih dulu.</p>
+    <div class="demo" data-css="order" data-target=".box.target">
+      <div class="demo-controls">
+        <span style="font-family:var(--code);font-size:12px;color:var(--muted);align-self:center;">Atur order kotak "★":</span>
+        <button data-value="-1">-1</button>
+        <button data-value="0" class="active">0</button>
+        <button data-value="1">1</button>
+        <button data-value="5">5</button>
+      </div>
+      <div class="preview">
+        <div class="box">1</div><div class="box b2 target">★</div><div class="box b3">3</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-card">
+    <h3>flex-grow</h3>
+    <div class="default">Default: <b>0</b></div>
+    <p>Seberapa besar item "menyerap" sisa ruang kosong di container, dibanding item lain. Angka lebih besar = ambil porsi lebih besar.</p>
+    <div class="demo" data-css="flex-grow" data-target=".box.target">
+      <div class="demo-controls">
+        <button data-value="0" class="active">0</button>
+        <button data-value="1">1</button>
+        <button data-value="2">2</button>
+        <button data-value="5">5</button>
+      </div>
+      <div class="preview">
+        <div class="box">1</div><div class="box b2 target">grow</div><div class="box b3">3</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-card">
+    <h3>flex-shrink</h3>
+    <div class="default">Default: <b>1</b></div>
+    <p>Seberapa besar item "menyusut" saat ruang container tidak cukup. Angka <code>0</code> berarti item tidak akan pernah menyusut.</p>
+    <div class="demo" data-css="flex-shrink" data-target=".box.target">
+      <div class="demo-controls">
+        <button data-value="1" class="active">1</button>
+        <button data-value="0">0</button>
+        <button data-value="3">3</button>
+      </div>
+      <div class="preview" style="width:260px;">
+        <div class="box" style="width:150px;">1</div><div class="box b2 target" style="width:150px;">shrink</div><div class="box b3" style="width:150px;">3</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-card">
+    <h3>flex-basis</h3>
+    <div class="default">Default: <b>auto</b></div>
+    <p>Ukuran awal item di sepanjang main axis, sebelum ruang sisa dibagi oleh grow/shrink.</p>
+    <div class="demo" data-css="flex-basis" data-target=".box.target">
+      <div class="demo-controls">
+        <button data-value="auto" class="active">auto</button>
+        <button data-value="80px">80px</button>
+        <button data-value="200px">200px</button>
+        <button data-value="0">0</button>
+      </div>
+      <div class="preview">
+        <div class="box">1</div><div class="box b2 target">basis</div><div class="box b3">3</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-card">
+    <h3>flex</h3>
+    <div class="default">Default: <b>0 1 auto</b></div>
+    <p>Shorthand dari <code>flex-grow flex-shrink flex-basis</code> sekaligus. Paling sering dipakai: <code>flex: 1</code> (artinya <code>1 1 0</code>, item mengisi ruang secara merata).</p>
+    <table>
+      <tr><th>Shorthand</th><th>Sama dengan</th></tr>
+      <tr><td><code>flex: 1;</code></td><td><code>flex-grow:1; flex-shrink:1; flex-basis:0;</code></td></tr>
+      <tr><td><code>flex: auto;</code></td><td><code>flex-grow:1; flex-shrink:1; flex-basis:auto;</code></td></tr>
+      <tr><td><code>flex: none;</code></td><td><code>flex-grow:0; flex-shrink:0; flex-basis:auto;</code> (item kaku, tidak berubah)</td></tr>
+    </table>
+    <div class="demo" data-css="flex" data-target=".box.target">
+      <div class="demo-controls">
+        <button data-value="0 1 auto" class="active">initial</button>
+        <button data-value="1">1</button>
+        <button data-value="2">2</button>
+        <button data-value="none">none</button>
+      </div>
+      <div class="preview">
+        <div class="box">1</div><div class="box b2 target">flex</div><div class="box b3">3</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prop-card">
+    <h3>align-self</h3>
+    <div class="default">Default: <b>auto</b> (ikut align-items parent)</div>
+    <p>Menimpa <code>align-items</code> milik parent, khusus untuk satu item tertentu di sepanjang cross axis.</p>
+    <div class="demo" data-css="align-self" data-target=".box.target">
+      <div class="demo-controls">
+        <button data-value="auto" class="active">auto</button>
+        <button data-value="flex-start">flex-start</button>
+        <button data-value="flex-end">flex-end</button>
+        <button data-value="center">center</button>
+        <button data-value="stretch">stretch</button>
+      </div>
+      <div class="preview tall">
+        <div class="box">1</div><div class="box b2 target">self</div><div class="box b3">3</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>Materi RPL · Flexbox — dibuat untuk kegiatan belajar mengajar.</footer>
+
+<script>
+  function toCamel(s){ return s.replace(/-([a-z])/g, (_,l)=>l.toUpperCase()); }
+
+  document.querySelectorAll('.demo').forEach(demo=>{
+    const prop = demo.dataset.css;
+    const targetSel = demo.dataset.target || '.preview';
+    const target = demo.querySelector(targetSel);
+    demo.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        target.style[toCamel(prop)] = btn.dataset.value;
+        demo.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  });
+
+  document.querySelectorAll('.axis-tabs button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.axis-tabs button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.axis-diagram').forEach(d=>d.classList.remove('active'));
+      document.getElementById('axis-'+btn.dataset.axis).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

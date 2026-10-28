@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan: Flex Item</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="03-flex-items.css">
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Latihan Flexbox</p>
+  <h1>Property Flex Item</h1>
+  <p class="lead">Property ini ditulis pada <b>child</b> (item), bukan pada parent. Buka file CSS untuk melihat dan mengubah property-nya.</p>
+</header>
+
+<main>
+
+  <!-- order -->
+  <section>
+    <h2>order</h2>
+    <div class="parent">
+      <div class="child">1 (order:2)</div>
+      <div class="child child--order">★ (order:-1)</div>
+      <div class="child">3 (order:0)</div>
+    </div>
+  </section>
+
+  <!-- flex-grow -->
+  <section>
+    <h2>flex-grow</h2>
+    <div class="parent">
+      <div class="child">grow:0</div>
+      <div class="child child--grow">grow:2</div>
+      <div class="child">grow:0</div>
+    </div>
+  </section>
+
+  <!-- flex-shrink -->
+  <section>
+    <h2>flex-shrink</h2>
+    <div class="parent parent--narrow">
+      <div class="child child--wide">shrink:1</div>
+      <div class="child child--wide child--noshrink">shrink:0</div>
+      <div class="child child--wide">shrink:1</div>
+    </div>
+  </section>
+
+  <!-- flex-basis -->
+  <section>
+    <h2>flex-basis</h2>
+    <div class="parent">
+      <div class="child">auto</div>
+      <div class="child child--basis">basis:200px</div>
+      <div class="child">auto</div>
+    </div>
+  </section>
+
+  <!-- flex shorthand -->
+  <section>
+    <h2>flex (shorthand)</h2>
+    <div class="parent">
+      <div class="child">flex:0</div>
+      <div class="child child--flex1">flex:1</div>
+      <div class="child">flex:0</div>
+    </div>
+  </section>
+
+  <!-- align-self -->
+  <section>
+    <h2>align-self</h2>
+    <div class="parent parent--tall">
+      <div class="child">1</div>
+      <div class="child child--self">self:flex-end</div>
+      <div class="child">3</div>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>

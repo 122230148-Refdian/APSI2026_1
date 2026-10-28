@@ -1,0 +1,16 @@
+.box {
+    width: 100px;
+    height: 70px;
+    margin: 8px;
+    background: #60A5FA;
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.box2 {
+    position: relative;
+    top: 25px;
+    left: 45px;
+    background: #F97316;
+}

@@ -1,0 +1,92 @@
+/* ===== Reset & tema dasar ===== */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #0d1117;
+  color: #e6edf3;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2 { font-family: 'Space Grotesk', sans-serif; margin: 0 0 6px; }
+
+header {
+  padding: 50px 24px 30px;
+  text-align: center;
+  border-bottom: 1px solid #2a3444;
+}
+.eyebrow{
+  font-family:'JetBrains Mono', monospace; font-size:13px; color:#7ee787;
+  text-transform:uppercase; letter-spacing:.15em; margin:0 0 10px;
+}
+.lead{ color:#8b98a9; max-width:520px; margin:8px auto 0; }
+.lead b{ color:#f0883e; }
+
+main{ max-width:800px; margin:0 auto; padding:40px 24px 100px; }
+section{ margin-bottom:48px; }
+section h2{
+  font-family:'JetBrains Mono', monospace; font-size:16px; font-weight:600;
+  color:#f0883e; margin-bottom:14px;
+}
+
+/* Parent hanya sebagai wadah flex biasa, sudah dibahas di file container */
+.parent {
+  display: flex;
+  background: #12181f;
+  border: 1px dashed #2a3444;
+  border-radius: 10px;
+  padding: 16px;
+  gap: 12px;
+}
+.parent--narrow{ width: 280px; }
+.parent--tall{ min-height: 140px; }
+
+.child {
+  background: #58a6ff;
+  color: #03101f;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+  padding: 18px 10px;
+  border-radius: 8px;
+  flex: 0 0 auto;
+}
+.child:nth-child(2) { background: #f0883e; }
+.child:nth-child(3) { background: #7ee787; }
+
+/* ===================================================== */
+/* INI BAGIAN UTAMA: FLEX ITEM properties                 */
+/* ===================================================== */
+
+/* --- order: default semua item = 0, urut sesuai HTML --- */
+.child--order {
+  order: -1;              /* item ini dipindah paling depan meski di HTML urutan ke-2 */
+}
+
+/* --- flex-grow: default 0, item ini "menyerap" ruang kosong 2x lipat --- */
+.child--grow {
+  flex-grow: 2;
+}
+
+/* --- flex-shrink: default 1, item ini menolak menyusut saat ruang sempit --- */
+.child--wide { width: 140px; }     /* sengaja dibuat lebar agar total > parent */
+.child--noshrink {
+  flex-shrink: 0;
+}
+
+/* --- flex-basis: ukuran awal sebelum grow/shrink dihitung --- */
+.child--basis {
+  flex-basis: 200px;
+}
+
+/* --- flex shorthand: grow shrink basis sekaligus --- */
+.child--flex1 {
+  flex: 1;                /* sama dengan flex-grow:1; flex-shrink:1; flex-basis:0 */
+}
+
+/* --- align-self: menimpa align-items milik parent, khusus item ini --- */
+.child--self {
+  align-self: flex-end;   /* coba ganti: flex-start / center / stretch */
+}
